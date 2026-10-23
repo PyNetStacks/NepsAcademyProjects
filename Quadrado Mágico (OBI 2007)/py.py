@@ -1,31 +1,34 @@
 def quadrado_magico():
-    n = int(input()) 
+    n = int(input())
     
     matriz = []
-
     for _ in range(n):
         num = list(map(int, input().split()))
         matriz.append(num)
+    
+    num_desejado = sum(matriz[0])
+    
+    for i in range(n):
+        if sum(matriz[i]) != num_desejado:
+            print("-1")
+            return
 
-    linha0 = matriz[0]
-    linha1 = matriz[1]
-    linha2 = matriz[2]
-    num_desejado= sum(linha0)
+    for j in range(n):
+        soma_coluna = sum(matriz[i][j] for i in range(n))
+        if soma_coluna != num_desejado:
+            print("-1")
+            return
 
-    condicoes = (
-    sum(linha0) == num_desejado and
-    sum(linha1) == num_desejado and
-    sum(linha2) == num_desejado and
-    (linha0[0] + linha1[0] + linha2[0]) == num_desejado and
-    (linha0[1] + linha1[1] + linha2[1]) == num_desejado and
-    (linha0[2] + linha1[2] + linha2[2]) == num_desejado and
-    (linha0[0] + linha1[1] + linha2[2]) == num_desejado and
-    (linha0[2] + linha1[1] + linha2[0]) == num_desejado
-    )
-
-    if condicoes:
-        print(num_desejado)
-    else: 
+    soma_diagonal_principal = sum(matriz[i][i] for i in range(n))
+    if soma_diagonal_principal != num_desejado:
         print("-1")
+        return
+
+    soma_diagonal_secundaria = sum(matriz[i][n - 1 - i] for i in range(n))
+    if soma_diagonal_secundaria != num_desejado:
+        print("-1")
+        return
+
+    print(num_desejado)
 
 quadrado_magico()
